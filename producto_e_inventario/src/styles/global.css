@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../../node_modules/flowbite";
+
+@theme{
+
+    --font-poppins: 'Poppins', sans-serif;
+    --color-secondary:#232624;
+    --color-primary:#015958;
+    --color-primary-light:#3EA7A4;
+    --color-primary-dark:#263238;
+    --color-gris-semitransparente:#4040406E;
+    --color-gray-dark:#404040;
+    --color-gray-light:#D9D9D9;
+    --color-green-gray:#5f5f5f;
+}
+
+/* Estilo común para todos los indicadores de servicios */
+.indicator-dot {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 9999px;
+  transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.indicator-dot.active {
+  background-color: white !important; 
+}
+
+.indicator-dot.inactive {
+  background-color: rgba(255, 255, 255, 0.5); 
+}
+
+/* Estilo común para todos los indicadores de know our process */
+.indicator-dot-know {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 9999px;
+  transition: background-color 0.3s ease; 
+}
+
+
+.indicator-dot.active {
+  background-color: gray !important; 
+}
+
+
+.indicator-dot.inactive {
+  background-color: rgba(255, 255, 255, 0.5); 
+}

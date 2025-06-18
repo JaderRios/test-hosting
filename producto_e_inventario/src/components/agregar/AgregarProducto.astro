@@ -1,0 +1,66 @@
+<!-- Botón para abrir el modal -->
+<div class='text-center mt-6'>
+  <button id='btn-abrir-modal' class='px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700'>
+    Agregar Producto
+  </button>
+</div>
+<!-- Modal -->
+<div id='modal-producto' class='hidden fixed inset-0 bg-black opacity-90 items-center justify-center z-50'>
+  <div class='bg-white p-6 rounded-lg shadow-lg w-96 relative'>
+    <button id='btn-cerrar-modal' class='absolute top-2 right-2 text-gray-400 hover:text-black text-2xl'>
+      &times;
+    </button>
+    <h2 class='text-xl font-bold mb-4 text-center'>Agregar Producto</h2>
+    <form id='form-producto' class='space-y-4'>
+      <input type='text' name='nombre' placeholder='Nombre del producto' required class='w-full border p-2 rounded' />
+      <input type='number' name='precio' placeholder='Precio' step='0.01' required class='w-full border p-2 rounded' />
+      <div class='flex justify-end gap-2'>
+        <button type='button' id='btn-cancelar' class='px-4 py-2 bg-gray-300 rounded hover:bg-gray-400'>Cancelar</button
+        >
+        <button type='submit' class='px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600'>Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script is:inline>
+  const modal = document.getElementById('modal-producto');
+  const abrirBtn = document.getElementById('btn-abrir-modal');
+  const cerrarBtn = document.getElementById('btn-cerrar-modal');
+  const cancelarBtn = document.getElementById('btn-cancelar');
+  const form = document.getElementById('form-producto');
+
+  abrirBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  });
+
+  cerrarBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('remove');
+  });
+
+  cancelarBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const nombre = form.nombre.value;
+    const precio = form.precio.value;
+
+    const response = await fetch('http://localhost:8080/productos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre, precio })
+    });
+
+    if (response.ok) {
+      alert('Producto agregado');
+      location.reload();
+    } else {
+      alert('Error al guardar producto');
+    }
+  });
+</script>

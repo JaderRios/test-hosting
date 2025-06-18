@@ -1,0 +1,102 @@
+---
+// Puedes recibir props si lo deseas
+const { inventario } = Astro.props || {};
+---
+
+<button
+  type='button'
+  class='px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600'
+  onclick={`abrirModalEditarInventario(${JSON.stringify(inventario)})`}
+>
+  Editar
+</button>
+<div
+  id='modal-editar-inventario'
+  class='hidden fixed inset-0 flex bg-black opacity-90 items-center justify-center z-50'
+>
+  <div class='bg-white p-6 rounded-lg shadow-lg w-96 relative'>
+    <button id='btn-cerrar-modal-editar' class='absolute top-2 right-2 text-gray-400 hover:text-black text-2xl'>
+      &times;
+    </button>
+    <h2 class='text-xl font-bold mb-4 text-center'>Editar Inventario</h2>
+    <form id='form-editar-inventario' class='space-y-4'>
+      <input type='hidden' name='idInventario' id='edit-id-inventario' />
+      <input
+        type='number'
+        name='idProducto'
+        id='edit-id-producto'
+        placeholder='ID del Producto'
+        required
+        class='w-full border p-2 rounded'
+      />
+      <input
+        type='number'
+        name='cantidad'
+        id='edit-cantidad'
+        placeholder='Cantidad'
+        required
+        class='w-full border p-2 rounded'
+      />
+      <input
+        type='text'
+        name='ubicacion'
+        id='edit-ubicacion'
+        placeholder='Ubicación'
+        required
+        class='w-full border p-2 rounded'
+      />
+      <div class='flex justify-end gap-2'>
+        <button type='button' id='btn-cancelar-editar' class='px-4 py-2 bg-gray-300 rounded hover:bg-gray-400'
+          >Cancelar</button
+        >
+        <button type='submit' class='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'>Guardar Cambios</button
+        >
+      </div>
+    </form>
+  </div>
+</div>
+
+<script is:inline>
+  const modalEditar = document.getElementById('modal-editar-inventario');
+  const cerrarEditarBtn = document.getElementById('btn-cerrar-modal-editar');
+  const cancelarEditarBtn = document.getElementById('btn-cancelar-editar');
+  const formEditar = document.getElementById('form-editar-inventario');
+
+  // Función global para llenar y mostrar el modal
+  window.abrirModalEditarInventario = inventario => {
+    document.getElementById('edit-id-inventario').value = inventario.idInventario;
+    document.getElementById('edit-id-producto').value = inventario.idProducto;
+    document.getElementById('edit-cantidad').value = inventario.cantidad;
+    document.getElementById('edit-ubicacion').value = inventario.ubicacion;
+    modalEditar.classList.remove('hidden');
+  };
+
+  cerrarEditarBtn.addEventListener('click', () => {
+    modalEditar.classList.add('hidden');
+  });
+
+  cancelarEditarBtn.addEventListener('click', () => {
+    modalEditar.classList.add('hidden');
+  });
+
+  formEditar.addEventListener('submit', async e => {
+    e.preventDefault();
+    const id = document.getElementById('edit-id-inventario').value;
+    const idProducto = document.getElementById('edit-id-producto').value;
+    const cantidad = document.getElementById('edit-cantidad').value;
+    const ubicacion = document.getElementById('edit-ubicacion').value;
+
+    const response = await fetch(`http://localhost:8080/inventarios/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idInventario: id, idProducto, cantidad, ubicacion })
+    });
+
+    if (response.ok) {
+      alert('Inventario actualizado');
+      location.reload();
+    } else {
+      alert('Error al actualizar');
+    }
+  });
+</script>

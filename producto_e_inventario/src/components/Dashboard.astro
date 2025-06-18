@@ -1,0 +1,20 @@
+<div class='min-h-screen bg-gradient-to-br from-indigo-500 via-white to-indigo-200 flex'>
+  <!-- Sidebar -->
+  <aside class='w-64 pt-20 bg-white shadow-md'>
+    <img src='header/logo.png' alt='Logo_empresa' class='h-15' />
+    <nav class='p-4 space-y-2'>
+      <a
+        href='/productos'
+        class='block py-2 px-4 rounded bg-indigo-300 hover:bg-indigo-100 text-slate-700 font-bold text-xl'>Productos</a
+      >
+      <a
+        href='/inventarios'
+        class='block py-2 px-4 rounded bg-indigo-300 hover:bg-indigo-100 text-slate-700 font-bold text-xl'>Inventario</a
+      >
+    </nav>
+  </aside>
+
+  <main class='flex-1 p-6'>
+    <slot />
+  </main>
+</div>

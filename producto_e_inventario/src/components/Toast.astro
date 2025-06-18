@@ -1,0 +1,26 @@
+---
+// Toast.astro
+const { message = 'Operación exitosa' } = Astro.props;
+---
+
+<div
+  id='toastSuccess'
+  class='hidden fixed top-5 right-5 bg-white text-center text-primary-dark px-6 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-300'
+  role='alert'
+>
+  <svg
+    class='w-6 h-6 text-green-500 inline-block'
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    stroke='currentColor'
+    aria-hidden='true'
+  >
+    <path
+      stroke-linecap='round'
+      stroke-linejoin='round'
+      stroke-width='2'
+      d='M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+  </svg>
+  <div class='ps-4 text-sm font-normal'>{message}</div>
+</div>

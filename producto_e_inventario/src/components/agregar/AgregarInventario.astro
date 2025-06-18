@@ -1,0 +1,71 @@
+<!-- Botón para abrir el modal -->
+<div class='text-center mt-6'>
+  <button id='btn-abrir-modal-inventario' class='px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700'>
+    Agregar Inventario
+  </button>
+</div>
+
+<!-- Modal -->
+<div id='modal-inventario' class='hidden fixed inset-0 bg-black opacity-90 items-center justify-center z-50'>
+  <div class='bg-white p-6 rounded-lg shadow-lg w-96 relative'>
+    <button id='btn-cerrar-modal-inventario' class='absolute top-2 right-2 text-gray-400 hover:text-black text-2xl'>
+      &times;
+    </button>
+    <h2 class='text-xl font-bold mb-4 text-center'>Agregar Inventario</h2>
+    <form id='form-inventario' class='space-y-4'>
+      <input type='number' name='idProducto' placeholder='ID del Producto' required class='w-full border p-2 rounded' />
+      <input type='number' name='cantidad' placeholder='Cantidad' required class='w-full border p-2 rounded' />
+      <input type='text' name='ubicacion' placeholder='Ubicación' required class='w-full border p-2 rounded' />
+      <div class='flex justify-end gap-2'>
+        <button type='button' id='btn-cancelar-inventario' class='px-4 py-2 bg-gray-300 rounded hover:bg-gray-400'
+          >Cancelar</button
+        >
+        <button type='submit' class='px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600'>Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script is:inline>
+  const modalInventario = document.getElementById('modal-inventario');
+  const abrirInventarioBtn = document.getElementById('btn-abrir-modal-inventario');
+  const cerrarInventarioBtn = document.getElementById('btn-cerrar-modal-inventario');
+  const cancelarInventarioBtn = document.getElementById('btn-cancelar-inventario');
+  const formInventario = document.getElementById('form-inventario');
+
+  abrirInventarioBtn.addEventListener('click', () => {
+    modalInventario.classList.remove('hidden');
+    modalInventario.classList.add('flex');
+  });
+
+  cerrarInventarioBtn.addEventListener('click', () => {
+    modalInventario.classList.add('hidden');
+    modalInventario.classList.remove('flex');
+  });
+
+  cancelarInventarioBtn.addEventListener('click', () => {
+    modalInventario.classList.add('hidden');
+    modalInventario.classList.remove('flex');
+  });
+
+  formInventario.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const idProducto = formInventario.idProducto.value;
+    const cantidad = formInventario.cantidad.value;
+    const ubicacion = formInventario.ubicacion.value;
+
+    const response = await fetch('http://localhost:8080/inventario', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idProducto, cantidad, ubicacion })
+    });
+
+    if (response.ok) {
+      alert('Inventario agregado');
+      location.reload();
+    } else {
+      alert('Error al guardar inventario');
+    }
+  });
+</script>
