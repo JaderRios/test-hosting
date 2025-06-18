@@ -3,8 +3,7 @@ import '../styles/global.css';
 import AgregarProducto from '../components/agregar/AgregarProducto.astro';
 import Dashboard from '../components/Dashboard.astro';
 import EditarProducto from '../components/editar/EditarProducto.astro';
-const res = await fetch('http://localhost:8080/productos');
-const data = await res.json();
+const data = [];
 const productos = data as { idProducto: number; nombre: string; precio: number }[];
 ---
 
